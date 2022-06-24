@@ -1,12 +1,12 @@
-#import lib.tf_silent
+import tf_silent
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 from matplotlib.gridspec import GridSpec
-#from lib.pinn import PINN
-#from lib.network import Network
-#from lib.optimizer import L_BFGS_B
+from pinn import PINN
+from network import Network
+from optimizer import L_BFGS_B
 
 
 
@@ -109,10 +109,6 @@ if __name__ == '__main__':
 
     xyt_in = np.random.rand(num_train_samples, 2) # input
     xyt_in[...,0] = 0
-
-    xyt_box = np.random.rand(num_train_samples, 2)
-    xyt_box[...,0] = (1 - x_ini)*xyt_box[...,0] + x_ini
-    xyt_box[...,1] = (y_f - 1)*xyt_box[...,1] + 1
 
     x_train = [xyt_eqn, xyt_w1, xyt_w2, xyt_w3, xyt_w4, xyt_out, xyt_in]
 
