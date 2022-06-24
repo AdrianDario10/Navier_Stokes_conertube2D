@@ -5,7 +5,7 @@ class PINN:
     """
     Build a physics informed neural network (PINN) model for the steady Navier-Stokes equation.
     Attributes:
-        network: keras network model with input (x, y) and output (psi, p).
+        network: keras network model with input (x, y) and output (u, v, p).
         rho: density.
         nu: viscosity.
         grads: gradient layer.
@@ -38,14 +38,12 @@ class PINN:
         # equation input: (x, y)
         xy_eqn = tf.keras.layers.Input(shape=(2,))
         # boundary condition
-        ##xy_bnd = tf.keras.layers.Input(shape=(3,))
         xy_in = tf.keras.layers.Input(shape=(2,))
         xy_out = tf.keras.layers.Input(shape=(2,))
         xy_w1 = tf.keras.layers.Input(shape=(2,))
         xy_w2 = tf.keras.layers.Input(shape=(2,))
         xy_w3 = tf.keras.layers.Input(shape=(2,))
         xy_w4 = tf.keras.layers.Input(shape=(2,))
-        xy_box = tf.keras.layers.Input(shape=(2,))
 
         # compute gradients relative to equation
         p_grads, u_grads, v_grads = self.grads(xy_eqn)
@@ -79,4 +77,4 @@ class PINN:
 
         # build the PINN model for the steady Navier-Stokes equation
         return tf.keras.models.Model(
-            inputs=[xy_eqn, xy_w1, xy_w2, xy_w3, xy_w4, xy_out, xy_in, xy_box], outputs=[uv_eqn, uv_in, uv_out, uv_w1, uv_w2, uv_w3, uv_w4])
+            inputs=[xy_eqn, xy_w1, xy_w2, xy_w3, xy_w4, xy_out, xy_in], outputs=[uv_eqn, uv_in, uv_out, uv_w1, uv_w2, uv_w3, uv_w4])
